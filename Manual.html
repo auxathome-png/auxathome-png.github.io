@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manual de Operaciones · At Home de México</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
+
+  :root {
+    --bg: #F5F2ED;
+    --surface: #FFFFFF;
+    --accent: #D4562A;
+    --accent2: #2A6DD4;
+    --accent3: #28A06B;
+    --text: #1A1A1A;
+    --muted: #888;
+    --border: #E0DCD5;
+    --tag-bg: #EDE9E3;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 260px;
+    height: 100vh;
+    background: var(--text);
+    color: white;
+    padding: 32px 0;
+    overflow-y: auto;
+    z-index: 100;
+  }
+
+  .sidebar-logo {
+    padding: 0 24px 28px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .sidebar-logo h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    line-height: 1.3;
+    color: white;
+  }
+
+  .sidebar-logo p {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .nav-section {
+    padding: 20px 0 8px;
+  }
+
+  .nav-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(255,255,255,0.3);
+    padding: 0 24px;
+    margin-bottom: 6px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 24px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer;
+    transition: all 0.15s;
+    border-left: 3px solid transparent;
+    text-decoration: none;
+  }
+
+  .nav-item:hover { color: white; background: rgba(255,255,255,0.06); }
+  .nav-item.active { color: white; background: rgba(255,255,255,0.1); border-left-color: var(--accent); }
+
+  .nav-icon { font-size: 16px; width: 20px; text-align: center; flex-shrink: 0; }
+
+  /* MAIN */
+  .main {
+    margin-left: 260px;
+    padding: 48px 48px 80px;
+    max-width: 960px;
+  }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* PAGE HEADER */
+  .page-header {
+    margin-bottom: 40px;
+  }
+
+  .page-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--muted);
+    background: var(--tag-bg);
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 12px;
+  }
+
+  .page-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 24px 28px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* STEPS */
+  .steps { list-style: none; }
+
+  .step {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+    align-items: flex-start;
+  }
+
+  .step-num {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .step-text { font-size: 14px; line-height: 1.6; color: #333; padding-top: 3px; }
+  .step-text strong { color: var(--text); }
+
+  /* ALERT BOXES */
+  .alert {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .alert-red { background: #FEF2EF; border-left: 4px solid var(--accent); }
+  .alert-blue { background: #EFF5FE; border-left: 4px solid var(--accent2); }
+  .alert-green { background: #EDFAF3; border-left: 4px solid var(--accent3); }
+  .alert-yellow { background: #FFFBEB; border-left: 4px solid #F59E0B; }
+
+  /* FLOW DIAGRAM */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .flow-node {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-size: 13.5px;
+    font-weight: 500;
+    text-align: center;
+    position: relative;
+  }
+
+  .flow-node.primary { background: var(--text); color: white; border-color: var(--text); }
+  .flow-node.accent { background: var(--accent); color: white; border-color: var(--accent); }
+  .flow-node.green { background: var(--accent3); color: white; border-color: var(--accent3); }
+  .flow-node.blue { background: var(--accent2); color: white; border-color: var(--accent2); }
+  .flow-node.diamond { background: #FFF8F0; border-color: #F59E0B; color: #92400E; font-weight: 600; }
+
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 32px;
+    position: relative;
+  }
+
+  .flow-arrow::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 50%;
+    left: 50%;
+    border-left: 2px dashed var(--border);
+  }
+
+  .flow-arrow::after {
+    content: '▼';
+    font-size: 12px;
+    color: var(--muted);
+    position: absolute;
+    bottom: 0;
+  }
+
+  .flow-branch {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 4px 0;
+  }
+
+  .flow-branch-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+
+  .branch-yes { color: var(--accent3); }
+  .branch-no { color: var(--accent); }
+
+  /* COLUMNS */
+  .cols { display: grid; gap: 16px; }
+  .cols-2 { grid-template-columns: 1fr 1fr; }
+  .cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+  /* TABLE */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+    margin-top: 10px;
+  }
+
+  th {
+    background: var(--tag-bg);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 2px solid var(--border);
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+    line-height: 1.5;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-red { background: #FEE2E2; color: #991B1B; }
+  .badge-blue { background: #DBEAFE; color: #1E40AF; }
+  .badge-green { background: #D1FAE5; color: #065F46; }
+
+  /* HOME GRID */
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .home-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .home-card:hover {
+    border-color: var(--text);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .home-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .home-card-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .home-card-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+  /* LINK */
+  a.external {
+    color: var(--accent2);
+    font-size: 13px;
+    text-decoration: none;
+    border-bottom: 1px dashed var(--accent2);
+  }
+
+  a.external:hover { color: var(--text); border-color: var(--text); }
+
+  .divider-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 20px 0;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--muted);
+  }
+  .divider-label::before, .divider-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  @media (max-width: 800px) {
+    .sidebar { display: none; }
+    .main { margin-left: 0; padding: 24px; }
+    .home-grid { grid-template-columns: 1fr 1fr; }
+    .cols-2, .cols-3 { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h1>At Home<br>de México</h1>
+    <p>Manual de Operaciones</p>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">General</div>
+    <a class="nav-item active" onclick="show('inicio')">
+      <span class="nav-icon">🏠</span> Inicio
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Diario</div>
+    <a class="nav-item" onclick="show('apertura')">
+      <span class="nav-icon">🔓</span> Apertura
+    </a>
+    <a class="nav-item" onclick="show('deposito')">
+      <span class="nav-icon">🏦</span> Depósito del corte
+    </a>
+    <a class="nav-item" onclick="show('inventario')">
+      <span class="nav-icon">📋</span> Inventario diario
+    </a>
+    <a class="nav-item" onclick="show('corte')">
+      <span class="nav-icon">💰</span> Corte de caja
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Ventas & Pagos</div>
+    <a class="nav-item" onclick="show('transferencias')">
+      <span class="nav-icon">📲</span> Transferencias
+    </a>
+    <a class="nav-item" onclick="show('facturacion')">
+      <span class="nav-icon">🧾</span> Facturación
+    </a>
+    <a class="nav-item" onclick="show('nomina')">
+      <span class="nav-icon">📉</span> Descuento a nómina
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Mercancía</div>
+    <a class="nav-item" onclick="show('recepcion')">
+      <span class="nav-icon">📦</span> Recepción de requisición
+    </a>
+    <a class="nav-item" onclick="show('solicitud')">
+      <span class="nav-icon">🔄</span> Solicitud de mercancía
+    </a>
+    <a class="nav-item" onclick="show('rastreo')">
+      <span class="nav-icon">🚚</span> Rastreo de guía
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Servicio</div>
+    <a class="nav-item" onclick="show('garantias')">
+      <span class="nav-icon">🛡️</span> Garantías
+    </a>
+    <a class="nav-item" onclick="show('notas_credito')">
+      <span class="nav-icon">📝</span> Notas de crédito
+    </a>
+    <a class="nav-item" onclick="show('cancelacion')">
+      <span class="nav-icon">❌</span> Cancelación de tickets
+    </a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Operaciones</div>
+    <a class="nav-item" onclick="show('etiquetado')">
+      <span class="nav-icon">🏷️</span> Etiquetado semanal
+    </a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- INICIO -->
+  <div class="section active" id="inicio">
+    <div class="page-header">
+      <span class="page-tag">Manual de Operaciones · v16/08/2025</span>
+      <h2 class="page-title">Bienvenido al<br>manual de sucursales</h2>
+    </div>
+
+    <div class="alert alert-blue">
+      <span class="alert-icon">ℹ️</span>
+      <div>Este manual establece los procesos operativos para el correcto funcionamiento de las sucursales de <strong>At Home de México</strong>. Diseñado por el departamento de supervisión bajo la dirección general.</div>
+    </div>
+
+    <div class="home-grid">
+      <div class="home-card" onclick="show('apertura')">
+        <div class="home-card-icon">🔓</div>
+        <div class="home-card-title">Apertura</div>
+        <div class="home-card-desc">Verificación de tienda y pantallas antes de abrir</div>
+      </div>
+      <div class="home-card" onclick="show('deposito')">
+        <div class="home-card-icon">🏦</div>
+        <div class="home-card-title">Depósito del corte</div>
+        <div class="home-card-desc">Antes de las 11:00 am o aplica penalización</div>
+      </div>
+      <div class="home-card" onclick="show('inventario')">
+        <div class="home-card-icon">📋</div>
+        <div class="home-card-title">Inventario diario</div>
+        <div class="home-card-desc">Terminar con diferencias antes de las 12:00 pm</div>
+      </div>
+      <div class="home-card" onclick="show('corte')">
+        <div class="home-card-icon">💰</div>
+        <div class="home-card-title">Corte de caja</div>
+        <div class="home-card-desc">Cuadrar transferencias, tarjetas, gastos y efectivo</div>
+      </div>
+      <div class="home-card" onclick="show('garantias')">
+        <div class="home-card-icon">🛡️</div>
+        <div class="home-card-title">Garantías</div>
+        <div class="home-card-desc">Registro en Drive y envío mensual el día 20</div>
+      </div>
+      <div class="home-card" onclick="show('facturacion')">
+        <div class="home-card-icon">🧾</div>
+        <div class="home-card-title">Facturación</div>
+        <div class="home-card-desc">Mínimo $500 · Límite día 29 de cada mes</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APERTURA -->
+  <div class="section" id="apertura">
+    <div class="page-header">
+      <span class="page-tag">Proceso diario</span>
+      <h2 class="page-title">Apertura de sucursal</h2>
+    </div>
+
+    <div class="alert alert-red">
+      <span class="alert-icon">⏰</span>
+      <div>El gerente debe llegar <strong>10 minutos antes</strong> de la apertura para verificar que todo esté en orden.</div>
+    </div>
+
+    <div class="cols cols-2">
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#D4562A"></span> Acomodo</div>
+        <div class="step-text">Verificar que ninguna pieza, herramienta o consumible esté en un lugar no asignado (vitrinas u otros espacios incorrectos).</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Limpieza</div>
+        <div class="step-text">El piso debe estar limpio. Si no lo está, identificar y asignar a la persona responsable de esa tarea.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#28A06B"></span> Evidencia de pantallas</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">1</span>
+          <span class="step-text">Encender la TV y poner el video de la <strong>memoria USB</strong> conectada a la pantalla.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">2</span>
+          <span class="step-text">Si hay exhibidor de cortadora, poner el video de la memoria en su pantalla también.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">3</span>
+          <span class="step-text">Tomar foto de <strong>ambas pantallas</strong> y enviar evidencia al <strong>canal de publicidad</strong>.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- DEPOSITO -->
+  <div class="section" id="deposito">
+    <div class="page-header">
+      <span class="page-tag">Proceso diario</span>
+      <h2 class="page-title">Depósito del corte</h2>
+    </div>
+
+    <div class="alert alert-red">
+      <span class="alert-icon">⚠️</span>
+      <div>El depósito debe realizarse <strong>antes de las 11:00 am</strong>. En caso de no cumplirlo se descontarán <strong>$50 al gerente</strong>.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#D4562A"></span> Pasos a seguir</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">1</span>
+          <span class="step-text">Contar y verificar que el corte esté completo y correcto.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">2</span>
+          <span class="step-text">Consultar en <strong>NOTION</strong> la cuenta que corresponde a la sucursal.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">3</span>
+          <span class="step-text">Ir a la entidad bancaria asignada (también verificar en NOTION) y depositar.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">4</span>
+          <span class="step-text">Tomar foto del comprobante y enviar al canal <strong>Gerencia en Slack</strong>, notificando al departamento de contabilidad.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="alert alert-yellow">
+      <span class="alert-icon">💬</span>
+      <div><strong>Si hay fila o no es posible depositar a tiempo:</strong> Informar al canal de <strong>pagos de la sucursal</strong> en Slack, etiquetando a los responsables de contabilidad para justificar el retraso.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#F59E0B"></span> Flujo resumido</div>
+      <div class="flow">
+        <div class="flow-node primary">💰 Depósito del corte</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node diamond">¿Está correctamente contado y completo?</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-branch">
+          <div>
+            <div class="flow-branch-label branch-no">✗ No</div>
+            <div class="flow-node accent">Contar y verificar de nuevo</div>
+          </div>
+          <div>
+            <div class="flow-branch-label branch-yes">✓ Sí</div>
+            <div class="flow-node diamond">¿Se conoce la cuenta y sucursal?</div>
+          </div>
+        </div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node blue">Ir al banco antes de las 11:00 am</div>
+        <div class="flow-arrow"></div>
+        <div class="flow-node green">Foto del comprobante → Slack "Gerencia"</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INVENTARIO -->
+  <div class="section" id="inventario">
+    <div class="page-header">
+      <span class="page-tag">Proceso diario</span>
+      <h2 class="page-title">Inventario diario</h2>
+    </div>
+
+    <div class="alert alert-red">
+      <span class="alert-icon">⏰</span>
+      <div>El inventario debe terminarse <strong>a más tardar a las 12:00 pm</strong> (incluyendo diferencias). Si no se cumple: <strong>$50 de descuento</strong> al gerente o responsable.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Toma de inventario</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">1</span>
+          <span class="step-text">Ir al canal <strong>Inventario Diario en Slack</strong> y ubicar el primer mensaje del día (imagen de lista).</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">2</span>
+          <span class="step-text">Buscar cada pieza de la lista <strong>en el orden indicado</strong> — esto es indispensable.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">3</span>
+          <span class="step-text">Tomar foto donde se vea el <strong>SKU y la cantidad</strong> de piezas encontradas.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">4</span>
+          <span class="step-text">Enviar todas las fotos al <strong>canal de la sucursal en Slack</strong> (en el mismo orden).</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">5</span>
+          <span class="step-text">Notificar en el canal de <strong>Inventario Diario</strong> que las fotos están listas para revisión.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="divider-label">Al revisar las fotos ocurren dos escenarios</div>
+
+    <div class="cols cols-2">
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#28A06B"></span> ✅ Sin diferencias</div>
+        <div class="step-text">Recibirás la leyenda <strong>"Inventario finalizado"</strong> como respuesta en el canal de Inventario Diario.</div>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#D4562A"></span> ⚠️ Con diferencias</div>
+        <div class="step-text">Te enviarán una tabla con columnas A–E. Debes resolver cada diferencia buscando la pieza o aplicando descuento a nómina.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#F59E0B"></span> Tabla de diferencias — ¿qué significa cada columna?</div>
+      <table>
+        <thead>
+          <tr><th>Col.</th><th>Significado</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>A</strong></td><td>SKU del producto a buscar</td></tr>
+          <tr><td><strong>B</strong></td><td>Nombre del producto</td></tr>
+          <tr><td><strong>C</strong></td><td>Piezas que debería haber según el sistema</td></tr>
+          <tr><td><strong>D</strong></td><td>Piezas observadas en la foto</td></tr>
+          <tr><td><strong>E</strong></td><td>Diferencia (C menos D)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#D4562A"></span> Cómo resolver diferencias</div>
+      <div class="alert alert-blue" style="margin-bottom:12px">
+        <span class="alert-icon">🔍</span>
+        <div><strong>Si el sistema coincide con columna C:</strong> Buscar en "Movimiento de productos" una venta del día actual o un traspaso. Reimprimir la nota y enviarla como evidencia.</div>
+      </div>
+      <div class="alert alert-yellow">
+        <span class="alert-icon">🔍</span>
+        <div><strong>Si el sistema NO coincide con columna C:</strong> Buscar en "Movimiento de productos" traspasos con inicio 7 días antes. Capturar el folio y SKU, enviarlo al canal de Inventario Diario.</div>
+      </div>
+      <div class="step-text" style="margin-top:10px">Si la pieza <strong>no se encuentra</strong> → sacar ticket y enviar descuento a nómina.</div>
+    </div>
+  </div>
+
+  <!-- CORTE DE CAJA -->
+  <div class="section" id="corte">
+    <div class="page-header">
+      <span class="page-tag">Proceso diario</span>
+      <h2 class="page-title">Corte de caja</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Pasos del corte</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">1</span>
+          <span class="step-text">Obtener el <strong>reporte de ventas del día</strong> en Kordata.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">2</span>
+          <span class="step-text">Ir al <strong>Drive de ingresos</strong> de la sucursal, hoja con el mes en curso, y ubicar el día del corte.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">3</span>
+          <span class="step-text"><strong>Cuadrar transferencias:</strong> sumar las transferencias confirmadas en el canal de pagos y verificar que coincidan con Kordata.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">4</span>
+          <span class="step-text"><strong>Cuadrar tarjetas:</strong> verificar que los montos de débito/crédito de la terminal coincidan con Kordata.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">5</span>
+          <span class="step-text">Sumar todos los <strong>gastos</strong> enviados al canal de pagos y colocarlos en la tabla.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">6</span>
+          <span class="step-text">Poner en <strong>"Total de ingresos"</strong> el monto de Kordata.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">7</span>
+          <span class="step-text">Contar el efectivo por denominaciones y colocar en la tabla. El apartado de <strong>diferencias debe mostrar 0</strong>.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">8</span>
+          <span class="step-text">En la <strong>hoja de meses</strong>, restar 1 al apartado "Restan". Copiar el monto de "Vta Diaria" y pegarlo en "Vta x Día" del día siguiente.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">9</span>
+          <span class="step-text">Tomar captura de la tabla y enviar al canal de <strong>Gerencia en Slack</strong> junto con el corte de terminal bancaria.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="alert alert-red">
+      <span class="alert-icon">⚠️</span>
+      <div>Si el apartado de diferencias <strong>no da 0</strong>, buscar el error, cancelar la nota errónea y meter la correcta. Si no se encuentra, aplicar descuento a nómina al equipo o responsable.</div>
+    </div>
+  </div>
+
+  <!-- TRANSFERENCIAS -->
+  <div class="section" id="transferencias">
+    <div class="page-header">
+      <span class="page-tag">Ventas & Pagos</span>
+      <h2 class="page-title">Confirmación de transferencias</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Proceso</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">1</span>
+          <span class="step-text">Consultar en <strong>NOTION</strong> la cuenta de la sucursal para transferencias.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">2</span>
+          <span class="step-text">Proporcionar la cuenta al cliente. Pedirle que coloque su <strong>nombre en el motivo de pago</strong>.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">3</span>
+          <span class="step-text">Una vez realizada la transferencia, tomar foto del comprobante y subirla al <strong>canal de pagos en Slack</strong>, notificando a contabilidad.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">4</span>
+          <span class="step-text">Esperar confirmación de contabilidad como respuesta al comprobante.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">5</span>
+          <span class="step-text">Solo hasta recibir la confirmación: meter la venta en Kordata y entregar ticket al cliente.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="alert alert-yellow">
+      <span class="alert-icon">❗</span>
+      <div><strong>La venta no se registra hasta que contabilidad confirme.</strong> No adelantarse.</div>
+    </div>
+  </div>
+
+  <!-- FACTURACION -->
+  <div class="section" id="facturacion">
+    <div class="page-header">
+      <span class="page-tag">Ventas & Pagos</span>
+      <h2 class="page-title">Facturación</h2>
+    </div>
+
+    <div class="cols cols-3" style="margin-bottom:20px">
+      <div class="alert alert-red" style="margin-bottom:0">
+        <span class="alert-icon">💵</span>
+        <div><strong>Mínimo $500</strong> para facturar</div>
+      </div>
+      <div class="alert alert-blue" style="margin-bottom:0">
+        <span class="alert-icon">📅</span>
+        <div><strong>Límite: día 29</strong> del mes</div>
+      </div>
+      <div class="alert alert-green" style="margin-bottom:0">
+        <span class="alert-icon">➕</span>
+        <div>Se suma <strong>IVA 16%</strong> al total</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#D4562A"></span> Métodos de pago aceptados para facturar</div>
+      <div class="cols cols-2">
+        <div class="alert alert-green" style="margin-bottom:0"><span class="alert-icon">💵</span> Efectivo</div>
+        <div class="alert alert-blue" style="margin-bottom:0"><span class="alert-icon">🏦</span> Transferencia bancaria</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Proceso en Kordata</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">1</span>
+          <span class="step-text">Poner todos los productos a facturar en Kordata y anotar el <strong>total sin IVA</strong>.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">2</span>
+          <span class="step-text">Agregar el SKU <strong>10900</strong>. En "cantidad" poner el total sin IVA. Esto genera el total con IVA.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">3</span>
+          <span class="step-text">Cobrar al cliente el <strong>total con IVA</strong>.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">4</span>
+          <span class="step-text">Subir los datos al <strong>Drive "Faltante Prueba"</strong> → hoja de factura:<br>
+          <a class="external" href="https://docs.google.com/spreadsheets/d/1zbInXhl0TE9UQLHoi5xf18qc2hnt2IaDRxloGbKRPoU" target="_blank">Abrir hoja de factura ↗</a></span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#28A06B"></span> Datos a registrar en el Drive</div>
+      <table>
+        <thead><tr><th>Campo</th><th>Descripción</th></tr></thead>
+        <tbody>
+          <tr><td><strong># de ticket</strong></td><td>Folio del ticket</td></tr>
+          <tr><td><strong>RFC</strong></td><td>Dato de la constancia de situación fiscal</td></tr>
+          <tr><td><strong>Uso de CFDI</strong></td><td>Preguntar al cliente</td></tr>
+          <tr><td><strong>Método de pago</strong></td><td>Una o más exhibiciones</td></tr>
+          <tr><td><strong>Forma de pago</strong></td><td>Efectivo o transferencia</td></tr>
+          <tr><td><strong>Nombre del cliente</strong></td><td>Nombre completo o razón social</td></tr>
+          <tr><td><strong>Régimen fiscal</strong></td><td>Dato de la constancia fiscal</td></tr>
+          <tr><td><strong>Correo del cliente</strong></td><td>Para envío de la factura</td></tr>
+          <tr><td><strong>Monto</strong></td><td>Total sin IVA</td></tr>
+          <tr><td><strong>IVA</strong></td><td>Monto de IVA cobrado</td></tr>
+          <tr><td><strong>Total</strong></td><td>Monto sin IVA + IVA</td></tr>
+          <tr><td><strong>Evidencia</strong></td><td>Liga de Drive con ticket, constancia fiscal y captura de transferencia si aplica</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- NOMINA -->
+  <div class="section" id="nomina">
+    <div class="page-header">
+      <span class="page-tag">Ventas & Pagos</span>
+      <h2 class="page-title">Descuento a nómina</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#D4562A"></span> Los 5 casos que aplican descuento</div>
+      <table>
+        <thead><tr><th>#</th><th>Motivo</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Pieza no encontrada en inventario diario</td></tr>
+          <tr><td>2</td><td>Pieza rota por un integrante del equipo</td></tr>
+          <tr><td>3</td><td>Pieza mal vendida por un integrante</td></tr>
+          <tr><td>4</td><td>Pieza adquirida por un integrante</td></tr>
+          <tr><td>5</td><td>Faltante en el corte</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Proceso para casos 1–4</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">1</span>
+          <span class="step-text">Meter la venta en Kordata con <strong>método de pago: efectivo</strong>.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">2</span>
+          <span class="step-text">Imprimir el ticket y tomar foto.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">3</span>
+          <span class="step-text">Enviar al <strong>canal de pagos de la sucursal</strong> con: motivo del descuento + <strong>nombre completo</strong> (no apodo) de quien aplica.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">4</span>
+          <span class="step-text">Etiquetar al departamento de contabilidad en el mensaje.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="alert alert-yellow">
+      <span class="alert-icon">💡</span>
+      <div><strong>Caso 5 – Faltante en corte:</strong> Solo mencionar en el canal de pagos los nombres completos de quienes aplica el descuento. No se requiere ticket.</div>
+    </div>
+  </div>
+
+  <!-- RECEPCION -->
+  <div class="section" id="recepcion">
+    <div class="page-header">
+      <span class="page-tag">Mercancía</span>
+      <h2 class="page-title">Recepción de requisición</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Proceso base</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">1</span>
+          <span class="step-text">Aceptar la requisición en <strong>Kordata</strong>.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">2</span>
+          <span class="step-text">Revisar la mercancía verificando buen estado y cantidad correcta por SKU.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="divider-label">Situaciones posibles al revisar</div>
+
+    <div class="cols cols-3">
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#D4562A"></span> Falta mercancía</div>
+        <ul class="steps">
+          <li class="step">
+            <span class="step-num" style="background:#FEF2EF;color:#D4562A">1</span>
+            <span class="step-text">Verificar en fotos de bodega del canal de la tienda en Slack.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#FEF2EF;color:#D4562A">2</span>
+            <span class="step-text">Reportar en canal <strong>Anexos, Pedidos, Faltantes</strong> con foto y explicación.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#FEF2EF;color:#D4562A">3</span>
+            <span class="step-text">Hacer traspaso a CEDIS de los SKU faltantes.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#F59E0B"></span> Sobra mercancía</div>
+        <ul class="steps">
+          <li class="step">
+            <span class="step-num" style="background:#FFFBEB;color:#92400E">1</span>
+            <span class="step-text">Reportar en canal <strong>Pedidos, Anexos, Faltantes</strong>.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#FFFBEB;color:#92400E">2</span>
+            <span class="step-text">Esperar a que CEDIS haga el traspaso y aceptarlo en cuanto lo haga.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#D4562A"></span> Mercancía dañada</div>
+        <ul class="steps">
+          <li class="step">
+            <span class="step-num" style="background:#FEF2EF;color:#D4562A">1</span>
+            <span class="step-text">Tomar foto donde se aprecie el defecto.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#FEF2EF;color:#D4562A">2</span>
+            <span class="step-text">Notificar a bodega en canal <strong>Anexo-Pedidos-Faltantes-Nuevos</strong> con fotos y descripción del daño.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#FEF2EF;color:#D4562A">3</span>
+            <span class="step-text">Hacer traspaso a bodega de la pieza rota.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOLICITUD -->
+  <div class="section" id="solicitud">
+    <div class="page-header">
+      <span class="page-tag">Mercancía</span>
+      <h2 class="page-title">Solicitud de mercancía</h2>
+    </div>
+
+    <div class="cols cols-2">
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> De Puebla PT / Ventas Nacionales</div>
+        <ul class="steps">
+          <li class="step">
+            <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">1</span>
+            <span class="step-text">Solicitar en canal Slack <strong>Pedidos Online</strong>, notificando a la tienda correspondiente.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">2</span>
+            <span class="step-text">Esperar confirmación de disponibilidad.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">3</span>
+            <span class="step-text">Solicitar el traspaso y que la pieza <strong>se envíe en la siguiente caja</strong> a bodega.</span>
+          </li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title"><span class="dot" style="background:#28A06B"></span> De otra sucursal</div>
+        <ul class="steps">
+          <li class="step">
+            <span class="step-num" style="background:#EDFAF3;color:#28A06B">1</span>
+            <span class="step-text">Informar al cliente: llega en <strong>2 días hábiles</strong> con costo extra de guía de $200.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#EDFAF3;color:#28A06B">2</span>
+            <span class="step-text">Solicitar en canal <strong>Pedidos Online</strong> a la tienda que tiene la pieza.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#EDFAF3;color:#28A06B">3</span>
+            <span class="step-text">Confirmar disponibilidad y pedir el traspaso.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#EDFAF3;color:#28A06B">4</span>
+            <span class="step-text">Pedir a bodega que genere guía con recolección en la tienda origen y enviar la guía a esa tienda.</span>
+          </li>
+          <li class="step">
+            <span class="step-num" style="background:#EDFAF3;color:#28A06B">5</span>
+            <span class="step-text">La tienda que envía: empaca, pega la guía y espera la recolección.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- RASTREO -->
+  <div class="section" id="rastreo">
+    <div class="page-header">
+      <span class="page-tag">Mercancía</span>
+      <h2 class="page-title">Rastreo de guía</h2>
+    </div>
+
+    <div class="alert alert-blue">
+      <span class="alert-icon">📦</span>
+      <div>Bodega comparte la guía en el <strong>canal Slack de la sucursal</strong> junto con fotos de requisición. Se envía caja de lunes a viernes, se debe tener una guía por día.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#D4562A"></span> Pasos</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">1</span>
+          <span class="step-text">Obtener la foto de la guía desde el canal Slack. Si no está, pedirla a la persona encargada de bodega.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">2</span>
+          <span class="step-text">Rastrear en la página oficial de la paquetería correspondiente.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">3</span>
+          <span class="step-text">Conocer el status y decidir si ir al ocurre o esperar entrega.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#28A06B"></span> Links de rastreo</div>
+      <div class="cols cols-3">
+        <div class="alert alert-yellow" style="margin-bottom:0;flex-direction:column;gap:6px">
+          <span style="font-weight:700;font-size:14px">DHL</span>
+          <a class="external" href="https://www.dhl.com/mx-es/home/rastreo.html" target="_blank">Rastrear ↗</a>
+        </div>
+        <div class="alert alert-red" style="margin-bottom:0;flex-direction:column;gap:6px">
+          <span style="font-weight:700;font-size:14px">FedEx</span>
+          <a class="external" href="https://www.fedex.com/es-mx/tracking.html" target="_blank">Rastrear ↗</a>
+        </div>
+        <div class="alert alert-blue" style="margin-bottom:0;flex-direction:column;gap:6px">
+          <span style="font-weight:700;font-size:14px">PaqueteExpress</span>
+          <a class="external" href="https://www.paquetexpress.com.mx/rastreo" target="_blank">Rastrear ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GARANTIAS -->
+  <div class="section" id="garantias">
+    <div class="page-header">
+      <span class="page-tag">Servicio al cliente</span>
+      <h2 class="page-title">Garantías</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Al recibir una garantía</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">1</span>
+          <span class="step-text">Corroborar que aplica la garantía.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">2</span>
+          <span class="step-text">Registrar <strong>de inmediato</strong> en el Drive de garantías de la sucursal:<br>
+          <a class="external" href="https://docs.google.com/spreadsheets/d/1_QNxKY6VxQMqYIIZtz086RirWelmfzFGZTMsIH9wYJc" target="_blank">Abrir Drive de garantías ↗</a></span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EFF5FE;color:#2A6DD4">3</span>
+          <span class="step-text">Llenar todos los datos solicitados en la hoja de la sucursal.</span>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#D4562A"></span> Envío mensual — cada día 20</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">1</span>
+          <span class="step-text">Hacer traspaso a garantías en Kordata de todos los productos registrados. Referenciar el periodo (ej: "garantías 20 sept – 20 oct").</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">2</span>
+          <span class="step-text">Empacar las garantías en una caja asegurándose de que no se dañen.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">3</span>
+          <span class="step-text">Enviar la caja con el supervisor en su siguiente visita y mandar captura del traspaso al departamento de soporte técnico.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- NOTAS DE CREDITO -->
+  <div class="section" id="notas_credito">
+    <div class="page-header">
+      <span class="page-tag">Servicio al cliente</span>
+      <h2 class="page-title">Notas de crédito</h2>
+    </div>
+
+    <div class="alert alert-blue">
+      <span class="alert-icon">ℹ️</span>
+      <div>Se emite cuando hay garantía válida pero <strong>no se tiene otra pieza para entregar</strong> al cliente.</div>
+    </div>
+
+    <div class="cols cols-2" style="margin-bottom:16px">
+      <div class="alert alert-green" style="margin-bottom:0">
+        <span class="alert-icon">📅</span>
+        <div>Vigencia: <strong>1 mes</strong></div>
+      </div>
+      <div class="alert alert-green" style="margin-bottom:0">
+        <span class="alert-icon">🛒</span>
+        <div>Válida para <strong>cualquier pieza</strong> de la tienda, en una o varias exhibiciones</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#28A06B"></span> Proceso</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">1</span>
+          <span class="step-text">Tomar <strong>video del fallo</strong> de la pieza + foto del ticket + fotos que muestren buen estado y sellos de garantía intactos.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">2</span>
+          <span class="step-text">Enviar evidencias al canal <strong>Soporte Técnico en Slack</strong> y solicitar la nota de crédito.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">3</span>
+          <span class="step-text">Informar al cliente que la nota estará lista <strong>al día siguiente</strong> y solicitar número de contacto para enviarla.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- CANCELACION -->
+  <div class="section" id="cancelacion">
+    <div class="page-header">
+      <span class="page-tag">Operaciones</span>
+      <h2 class="page-title">Cancelación de tickets</h2>
+    </div>
+
+    <div class="alert alert-yellow">
+      <span class="alert-icon">⚠️</span>
+      <div>Usar cuando se cierra una venta por error, se cobra el producto incorrecto o se usa el método de pago equivocado. La nota incorrecta <strong>afecta el corte</strong> hasta que se cancele.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#D4562A"></span> Pasos</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">1</span>
+          <span class="step-text">Tomar foto del ticket a cancelar.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">2</span>
+          <span class="step-text">Enviar al canal <strong>Soporte Técnico en Slack</strong> y etiquetar a garantías.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#FEF2EF;color:#D4562A">3</span>
+          <span class="step-text">Quedar en espera de la confirmación de cancelación en el hilo de respuestas.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ETIQUETADO -->
+  <div class="section" id="etiquetado">
+    <div class="page-header">
+      <span class="page-tag">Operaciones semanales</span>
+      <h2 class="page-title">Etiquetado semanal</h2>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#2A6DD4"></span> Dónde conseguir los archivos</div>
+      <div class="cols cols-2">
+        <div class="alert alert-blue" style="margin-bottom:0">
+          <span class="alert-icon">🎨</span>
+          <div><strong>Etiquetado normal:</strong> Un supervisor lo manda en el canal de <strong>Gerencia en Slack</strong></div>
+        </div>
+        <div class="alert alert-yellow" style="margin-bottom:0">
+          <span class="alert-icon">🗂️</span>
+          <div><strong>Etiquetado descontinuado:</strong> Llega por <strong>mensaje directo</strong> al Slack de la sucursal</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:#28A06B"></span> Proceso de impresión y armado</div>
+      <ul class="steps">
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">1</span>
+          <span class="step-text">Imprimir etiquetado normal en <strong>hojas de colores</strong> y descontinuado en <strong>hojas blancas</strong>.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">2</span>
+          <span class="step-text">Recortar máximo <strong>7 modelos por etiqueta</strong> en orden alfabético.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">3</span>
+          <span class="step-text">Pegar en <strong>cartón blanco</strong> y numerar cada etiqueta (iniciando desde el 1).</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">4</span>
+          <span class="step-text">Colocar primero las de colores (normales) y a continuación las blancas (descontinuadas).</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">5</span>
+          <span class="step-text">Colocar el producto en el gancho según el orden de la etiqueta. Repetir con cada etiqueta.</span>
+        </li>
+        <li class="step">
+          <span class="step-num" style="background:#EDFAF3;color:#28A06B">6</span>
+          <span class="step-text">Tomar foto del avance y mandarlo al canal de <strong>Gerencia en Slack</strong> al terminar.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + id + "'")) {
+      n.classList.add('active');
+    }
+  });
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
